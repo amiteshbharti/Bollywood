@@ -1,0 +1,152 @@
+<?php 
+if(!isset($_SESSION['username']) || (trim($_SESSION['username']) == ''))
+{
+	header("Location:index.php?controller=login&function=execute_process");
+		
+}
+
+?>
+<html>
+
+	<head>
+	</head>
+	<center>
+	<body>
+	
+<div id ="questions" style="overflow:auto;">
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="85%">
+  
+  <tr>
+    <td width="100%">
+    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+      <tr>
+        <td width="100%">
+
+	
+  <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" height="35%">
+	
+	<tr>
+    <td width="15%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">User Name</span></b></span></td>
+    
+    <td width="11%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">I.P. Address</span></b></span></td>
+    
+    <td width="18%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">Access Date</span></b></span></td>
+    
+    <td width="32%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">Browser Details</span></b></span></td>
+    
+    <td width="8%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">Port Used</span></b></span></td>
+    
+    <td width="16%" bgcolor="#C0C0C0" height="15">
+    <span style="font-size: 8.5pt; color: #333333"><b>
+    <span style="font-family: Verdana">Machine Name</span></b></span></td>
+  </tr>
+
+  
+  <?php
+  ini_set("display_errors","1");
+  $start	=	0;
+  $end	=	0;
+  
+//print_r($arrData);
+  	
+  	if(isset($arrData['log']['start']))
+  	{
+  	$start	=	$arrData['log']['start'];
+ 	$end	=	$arrData['log']['end'];
+  	}
+  
+echo $start;
+echo $end;
+  	  foreach($arrData as $key=>$b)
+  		{
+  			
+  			$n	=	count($b);
+  			for($i=1;$i<=$n;$i++)
+  			{
+ 
+  			//print_r($b);
+  	    
+?>
+
+                 
+                         <tr>
+			    <td width='15%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php echo $b['username'][$i];?> </span></font></span></td>
+			    
+			    <td width='11%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php echo $b['ip_address'][$i];?> </span></font></span></td>
+			    
+			    <td width='18%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php echo $b['access_date'][$i];?> </span></font></span></td>
+			    
+			    <td width='32%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php echo $b['browser_details'][$i];?> </span></font></span></td>
+			    
+			    <td width='8%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php echo $b['port'][$i];?> </span></font></span></td>
+			    
+			    <td width='16%' height='19'><span style='font-size: 8.5pt; line-height: 115%; font-family: Verdana; color: black'>
+			    <font color='#336699'><span style='line-height: 115%'><?php  echo $b['machine_name'][$i];?> </span></font></span></td>
+			  </tr>
+<?php 
+  		if($start>$n)
+  		{
+  			$start	=	0;}
+  		}} ?>			  
+			  <tr>
+			  <td><a href="javascript:nextPage(<?php echo $start+10; ?>,<?php echo $end; ?>)">Next</a>
+			  <td><a href="javascript:previousPage(<?php echo $start-10; ?>,<?php echo $end; ?>)">Previous</a>
+	    </table>   
+ <p>&nbsp;</p>
+ <p>&nbsp;</p>
+  <p>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+    <td width="100%" bgcolor="#7D9EC0">
+    <p align="center">--- All Rights Reserved ---</td>
+</tr>
+</table>
+</div>
+
+
+	<script type="text/javascript">
+
+
+			function nextPage(start,end)
+			{
+						$('#questions').load("index.php?controller=user_list&function=logManage&start="+start+"&end="+end);
+		
+			}
+
+			function previousPage(start,end)
+			{
+				if(start<0)
+				{
+					alert("You are at the first Page");
+				}else{	
+					$('#questions').load("index.php?controller=user_list&function=logManage&start="+start+"&end="+end);
+				}
+
+			}
+
+			
+
+	</script>
+</body>
+
+</html>
+
